@@ -12,7 +12,5 @@ setup(
     author='Gjermund Bjaanes',
     author_email='bjaanes@gmail.com',
     description='Python application that backs up your GoodReads shelves',
-    install_requires=[
-        'pymongo'
-    ]
+    install_requires=[]
 )
