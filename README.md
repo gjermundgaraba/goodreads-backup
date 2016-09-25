@@ -1,12 +1,12 @@
-# GoodReads Backup
-Python application to back up your GoodReads shelves.
+# Goodreads Backup
+Python application to back up your Goodreads shelves.
 
-Will use GoodReads API's to fetch data.
+Will use Goodreads API's to fetch data.
 
 Application still in early infancy. The exact functionality is not yet determined. 
 
-The reasoning behind this project was to save my lists in case GoodReads decide to delete them or in any way corrupts my data.
-GoodReads seems to have rather low quality in their software, so I don't really trust them to keep my data safe.
+The reasoning behind this project was to save my lists in case Goodreads decide to delete them or in any way corrupts my data.
+Goodreads seems to have rather low quality in their software, so I don't really trust them to keep my data safe.
 
 Functionality and use cases not yet determined. Will probably change during development.
 
