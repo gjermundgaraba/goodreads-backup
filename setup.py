@@ -11,6 +11,6 @@ setup(
     license='MIT',
     author='Gjermund Bjaanes',
     author_email='bjaanes@gmail.com',
-    description='Python application that backs up your GoodReads shelves',
+    description='Python application that backs up your Goodreads shelves',
     install_requires=[]
 )
