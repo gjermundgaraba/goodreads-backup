@@ -29,22 +29,9 @@ def main():
         xml = urlopen(get_url(user, key, per_page, current_page))
         dom = parse(xml)
 
-    shelves = {}
-    for book in books:
-        for shelf in book['shelves']:
-            if shelf not in shelves:
-                shelves[shelf] = []
-            shelves[shelf].append(book)
+    shelves = extract_shelves(books)
 
-    for shelf_name, shelf in shelves.items():
-        with open(shelf_name + '.csv', 'w', newline='') as csv_file:
-            csv_writer = csv.writer(csv_file, delimiter=',')
-
-            for book in shelf:
-                book_title = book['title']
-                book_id = book['id']
-
-                csv_writer.writerow([book_id, book_title])
+    write_shelves_to_disk(shelves)
 
 
 def extract_books(books, dom):
@@ -55,6 +42,8 @@ def extract_books(books, dom):
         id_element = book_element.getElementsByTagName("id")[0]
         isbn_element = book_element.getElementsByTagName("isbn")[0]
         isbn13_element = book_element.getElementsByTagName("isbn13")[0]
+        started_at = review.getElementsByTagName("started_at")[0]
+        read_at = review.getElementsByTagName("read_at")[0]
 
         shelves_element = review.getElementsByTagName("shelves")[0]
         book_shelves = []
@@ -69,10 +58,51 @@ def extract_books(books, dom):
 
         if isbn_element.getAttribute("nil") != "true":
             book['isbn'] = isbn_element.firstChild.data
+        else:
+            book['isbn'] = ""
+
         if isbn13_element.getAttribute("nil") != "true":
             book['isbn13'] = isbn13_element.firstChild.data
+        else:
+            book['isbn13'] = ""
+
+        if started_at.firstChild is not None:
+            book['started_at'] = started_at.firstChild.data
+        else:
+            book['started_at'] = ""
+
+        if read_at.firstChild is not None:
+            book['read_at'] = read_at.firstChild.data
+        else:
+            book['read_at'] = ""
 
         books.append(book)
+
+
+def extract_shelves(books):
+    shelves = {}
+    for book in books:
+        for shelf in book['shelves']:
+            if shelf not in shelves:
+                shelves[shelf] = []
+            shelves[shelf].append(book)
+    return shelves
+
+
+def write_shelves_to_disk(shelves):
+    for shelf_name, shelf in shelves.items():
+        with open(shelf_name + '.csv', 'w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',')
+
+            for book in shelf:
+                book_title = book['title']
+                book_id = book['id']
+                isbn = book['isbn']
+                isbn13 = book['isbn13']
+                started_at = book['started_at']
+                read_at = book['read_at']
+
+                csv_writer.writerow([book_id, book_title, isbn, isbn13, started_at, read_at])
 
 
 def get_url(user, key, per_page, page):
