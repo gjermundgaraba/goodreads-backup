@@ -12,6 +12,7 @@ def main():
     per_page = 20  # 1-200
     user = config['CONFIG']['user']
     key = config['CONFIG']['key']
+    header = config['CONFIG']['header'].lower() in ('yes', 'true', '1')
 
     current_page = 1
     xml = urlopen(get_url(user, key, per_page, current_page))
@@ -31,7 +32,7 @@ def main():
 
     shelves = extract_shelves(books)
 
-    write_shelves_to_disk(shelves)
+    write_shelves_to_disk(shelves, header)
 
 
 def extract_books(books, dom):
@@ -89,10 +90,13 @@ def extract_shelves(books):
     return shelves
 
 
-def write_shelves_to_disk(shelves):
+def write_shelves_to_disk(shelves, header):
     for shelf_name, shelf in shelves.items():
         with open(shelf_name + '.csv', 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
+
+            if header:
+                csv_writer.writerow(['Goodreads Id', 'Title', 'ISBN', 'ISBN13', 'Started At', 'Read At'])
 
             for book in shelf:
                 book_title = book['title']
