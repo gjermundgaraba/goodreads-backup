@@ -1,13 +1,8 @@
 # Goodreads Backup
-Python application to back up your Goodreads shelves.
+Python script to back up your Goodreads shelves.
 
-Will use Goodreads API's to fetch data.
+Uses the Goodreads API's to fetch data.
 
-Application still in early infancy. The exact functionality is not yet determined. 
+The reasoning for writing this script was that Goodreads seems to have some pretty buggy apps, and I don't completly trust them with keeping all my data safe. My to-read list is especially important for me to not lose.
 
-The reasoning behind this project was to save my lists in case Goodreads decide to delete them or in any way corrupts my data.
-Goodreads seems to have rather low quality in their software, so I don't really trust them to keep my data safe.
-
-Functionality and use cases not yet determined. Will probably change during development.
-
-If you want to chime in with ideas or even code, feel free to do so!
+The script fetches all your books from all shelves and saves them to seperate CSV files.
