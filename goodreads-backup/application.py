@@ -3,14 +3,19 @@ from xml.dom.minidom import parse
 import configparser
 import csv
 import math
-
+import sys
 
 def main():
     config = configparser.ConfigParser()
     config.read('config.ini')
 
     per_page = 20  # 1-200
-    user = config['CONFIG']['user']
+
+    if len(sys.argv) > 1:
+        user = sys.argv[1]
+    else:
+        user = config['CONFIG']['user']
+
     key = config['CONFIG']['key']
     header = config['CONFIG']['header'].lower() in ('yes', 'true', '1')
 
