@@ -4,6 +4,7 @@ import configparser
 import csv
 import math
 import sys
+import os
 
 def main():
     config = configparser.ConfigParser()
@@ -97,7 +98,12 @@ def extract_shelves(books):
 
 def write_shelves_to_disk(shelves, header):
     for shelf_name, shelf in shelves.items():
-        with open(shelf_name + '.csv', 'w', newline='') as csv_file:
+        file_name = shelf_name + '.csv'
+        if len(sys.argv) > 2:
+            file_path = os.path.join(sys.argv[2], file_name)
+        else:
+            file_path = file_name
+        with open(file_path, 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
 
             if header:
