@@ -8,7 +8,7 @@ import os
 
 def main():
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
     per_page = 20  # 1-200
 
